@@ -12,3 +12,6 @@ npm-debug.log*
 # Mini Program build outputs
 miniprogram_npm/
 node_modules/
+
+# Intermediate demo recording
+demo_video_raw/

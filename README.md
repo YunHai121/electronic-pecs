@@ -16,6 +16,8 @@
 ```
 e:\Download\电子PECS\
 ├── 📄 3AFDAC8358620BD53BF74C9DFE562324.jpg     # 课题答辩与汇报核心框架原图 (01-06六大模块)
+├── 📊 电子PECS项目汇报.pptx                    # 课题完整答辩汇报PPT (23页16:9宽屏，深度结合竞品痛点)
+├── 🎥 电子PECS产品使用演示与讲解.mp4           # 产品全流程使用演示视频 (720P 38秒 带中文字幕解说)
 ├── 📄 下载.pdf                                 # 临床实证文献1 (Tamanaha et al., 2023, CoDAS)
 ├── 📄 The+Use+of+the+Picture+Exchange...pdf     # 临床实证文献2 (Fahliza et al., 2024, SLR)
 │
