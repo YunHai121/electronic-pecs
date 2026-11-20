@@ -1,0 +1,72 @@
+/* pages/library/library.wxss */
+.search-wrap {
+  margin-bottom: 16rpx;
+}
+.search-input {
+  background: #FFFFFF;
+  border: 2rpx solid #CBD5E1;
+  border-radius: 16rpx;
+  padding: 16rpx 24rpx;
+  font-size: 28rpx;
+}
+.tip-text {
+  font-size: 22rpx;
+  color: #64748B;
+  display: block;
+  margin-bottom: 18rpx;
+}
+.lib-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14rpx;
+}
+.lib-item {
+  background: #FFFFFF;
+  border: 2rpx solid #E2E8F0;
+  border-radius: 18rpx;
+  padding: 20rpx 24rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.lib-left {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+.color-dot {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+}
+.lib-icon {
+  font-size: 40rpx;
+}
+.lib-title {
+  font-size: 28rpx;
+  font-weight: 800;
+  color: #0F172A;
+  display: block;
+}
+.lib-pinyin {
+  font-size: 22rpx;
+  color: #64748B;
+  font-weight: normal;
+}
+.lib-cat {
+  font-size: 22rpx;
+  color: #0284C7;
+  display: block;
+  margin-top: 4rpx;
+}
+.lib-right {
+  display: flex;
+  align-items: center;
+  gap: 14rpx;
+}
+.btn-del {
+  font-size: 24rpx;
+  color: #EF4444;
+  font-weight: bold;
+  padding: 8rpx 12rpx;
+}

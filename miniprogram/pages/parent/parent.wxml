@@ -1,20 +1,65 @@
 <!-- pages/parent/parent.wxml -->
 <view class="container">
+  <view class="summary-banner">
+    <view class="sum-item">
+      <text class="sum-val">{{cardCount}}</text>
+      <text class="sum-lbl">当前词库卡片</text>
+    </view>
+    <view class="sum-divider"></view>
+    <view class="sum-item">
+      <text class="sum-val">{{logCount}}</text>
+      <text class="sum-lbl">累计沟通记录</text>
+    </view>
+  </view>
+
   <view class="menu-grid">
     <navigator url="/pages/create/create" class="menu-card">
-      <text class="menu-icon">📷</text>
-      <text class="menu-title">拍照做卡工坊</text>
-      <text class="menu-desc">手机随手拍物品快速制卡</text>
+      <view class="menu-left">
+        <text class="menu-icon">📷</text>
+        <view>
+          <text class="menu-title">拍照做卡工坊</text>
+          <text class="menu-desc">拍摄实物 · 自动注音 · 录制家长原声</text>
+        </view>
+      </view>
+      <text class="menu-arrow">›</text>
     </navigator>
+
+    <navigator url="/pages/library/library" class="menu-card">
+      <view class="menu-left">
+        <text class="menu-icon">📁</text>
+        <view>
+          <text class="menu-title">卡片库与显隐管理</text>
+          <text class="menu-desc">控制卡片显隐 · 配合Phase III渐进训练</text>
+        </view>
+      </view>
+      <text class="menu-arrow">›</text>
+    </navigator>
+
     <navigator url="/pages/stats/stats" class="menu-card">
-      <text class="menu-icon">📊</text>
-      <text class="menu-title">行为数据看板</text>
-      <text class="menu-desc">查看儿童沟通频次与词汇分析</text>
+      <view class="menu-left">
+        <text class="menu-icon">📊</text>
+        <view>
+          <text class="menu-title">沟通行为数据看板</text>
+          <text class="menu-desc">7日趋势 · Top5高频词 · 导出IEP报告</text>
+        </view>
+      </view>
+      <text class="menu-arrow">›</text>
+    </navigator>
+
+    <navigator url="/pages/settings/settings" class="menu-card">
+      <view class="menu-left">
+        <text class="menu-icon">⚙️</text>
+        <view>
+          <text class="menu-title">语音与系统设置</text>
+          <text class="menu-desc">语速微调 · 入门大卡模式 · 离线包备份</text>
+        </view>
+      </view>
+      <text class="menu-arrow">›</text>
     </navigator>
   </view>
 
   <view class="notice-card">
-    <text class="notice-title">⚠️ 专业AAC使用告知</text>
-    <text class="notice-text">本小程序作为辅助沟通与视觉支持工具，不替代正规医疗康复机构对儿童语言与认知发育阶段的专业AAC临床评估。</text>
+    <text class="notice-title">⚠️ 专业AAC评估与临床使用声明</text>
+    <text class="notice-text">本小程序作为辅助沟通与视觉增强工具，不替代正规医疗康复机构对儿童语言与认知发育阶段的专业AAC临床评估。请在特教老师或言语治疗师指导下使用。</text>
   </view>
 </view>

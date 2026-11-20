@@ -3,20 +3,48 @@
   <view class="photo-box" bindtap="chooseImage">
     <image wx:if="{{photoUrl}}" src="{{photoUrl}}" mode="aspectFill" class="photo-img"></image>
     <view wx:else class="upload-placeholder">
-      <text style="font-size: 60rpx;">📷</text>
-      <text style="font-size: 26rpx; color: #64748B; margin-top: 10rpx;">点击拍摄或选取照片</text>
+      <text style="font-size: 64rpx;">📷</text>
+      <text style="font-size: 26rpx; color: #64748B; margin-top: 10rpx; font-weight:700;">点击拍照或相册选图</text>
     </view>
   </view>
 
-  <view class="form-item">
-    <text class="label">卡片名称 (汉字)：</text>
-    <input class="input" placeholder="例如：海苔" bindinput="onInputText" value="{{cardText}}"/>
+  <view class="form-card">
+    <view class="form-item">
+      <text class="label">卡片名称 (汉字，自动匹配拼音)：</text>
+      <input class="input" placeholder="例如：草莓、海苔、积木" bindinput="onInputText" value="{{cardText}}"/>
+    </view>
+
+    <view class="form-item">
+      <text class="label">注音拼音：</text>
+      <input class="input" placeholder="自动识别或手动输入" bindinput="onInputPinyin" value="{{cardPinyin}}"/>
+    </view>
+
+    <view class="form-item">
+      <text class="label">所属分类 (自动匹配 Fitzgerald Key 色彩)：</text>
+      <picker mode="selector" range="{{catNames}}" value="{{catIndex}}" bindchange="onCatChange">
+        <view class="picker-box">{{catNames[catIndex]}} ▾</view>
+      </picker>
+    </view>
+
+    <view class="form-item">
+      <text class="label">高频情境标签：</text>
+      <picker mode="selector" range="{{tagNames}}" value="{{tagIndex}}" bindchange="onTagChange">
+        <view class="picker-box">{{tagNames[tagIndex]}} ▾</view>
+      </picker>
+    </view>
+
+    <!-- 家长真人录音区 -->
+    <view class="form-item">
+      <text class="label">家长专属录音 (可选，温和原声更易接受)：</text>
+      <view class="recorder-row">
+        <button class="btn-rec {{isRecording ? 'recording' : ''}}" bindtap="toggleRecord">
+          {{isRecording ? '⏹️ 停止录音' : '🎙️ 按点击开始录音'}}
+        </button>
+        <button wx:if="{{customAudioPath}}" class="btn-play-rec" bindtap="playRecorded">▶️ 试听</button>
+      </view>
+      <text wx:if="{{customAudioPath}}" class="rec-ok">✅ 已录制自定义家长原声</text>
+    </view>
   </view>
 
-  <view class="form-item">
-    <text class="label">注音拼音：</text>
-    <input class="input" placeholder="例如：hǎi tái" bindinput="onInputPinyin" value="{{cardPinyin}}"/>
-  </view>
-
-  <button class="btn-primary" style="margin-top: 40rpx; width: 100%;" bindtap="saveCard">保存卡片</button>
+  <button class="btn-primary save-btn" bindtap="saveCard">💾 保存并生成卡片</button>
 </view>

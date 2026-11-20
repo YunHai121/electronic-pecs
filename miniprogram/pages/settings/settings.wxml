@@ -1,0 +1,42 @@
+<!-- pages/settings/settings.wxml -->
+<view class="container">
+  <view class="setting-card">
+    <text class="setting-title">📐 训练阶段与网格密度</text>
+    <text class="setting-desc">适应不同发育阶段患儿的视觉辨别与触控精细能力</text>
+    <radio-group bindchange="onDensityChange" class="radio-group">
+      <label class="radio-item">
+        <radio value="standard" checked="{{settings.gridDensity === 'standard'}}" color="#0284C7" />
+        <text>标准 3 列网格 (Phase IV+ 丰富词库)</text>
+      </label>
+      <label class="radio-item">
+        <radio value="beginner" checked="{{settings.gridDensity === 'beginner'}}" color="#0284C7" />
+        <text>入门 2 列超大卡 (Phase I-III 防误触)</text>
+      </label>
+    </radio-group>
+  </view>
+
+  <view class="setting-card">
+    <text class="setting-title">🔊 语音语速调节 ({{settings.rate}}x)</text>
+    <text class="setting-desc">专为 ASD 儿童听觉加工延迟与超敏设计 (推荐 0.85x)</text>
+    <slider min="50" max="130" step="5" value="{{rateSliderVal}}" activeColor="#0284C7" show-value="{{false}}" bindchange="onRateChange" />
+    <view class="slider-labels">
+      <text>0.5x 极慢</text>
+      <text>0.85x 推荐</text>
+      <text>1.3x 较快</text>
+    </view>
+  </view>
+
+  <view class="setting-card">
+    <text class="setting-title">💾 数据本地优先与离线卡包备份</text>
+    <text class="setting-desc">所有生活卡片与行为日志均加密驻留本机，零公网隐私泄露</text>
+    <view class="btn-row">
+      <button class="btn-outline" bindtap="exportPack">📥 复制离线卡包JSON</button>
+      <button class="btn-danger" bindtap="resetDefaults">🔄 恢复默认词库</button>
+    </view>
+  </view>
+
+  <view class="disclaimer-box">
+    <text class="disc-title">⚠️ 专业AAC评估声明</text>
+    <text class="disc-text">本系统不替代正规医疗机构对儿童实施的专业AAC医学评估。若需使用在线TTS合成，可在微信公众平台为本小程序免费添加“微信同声传译”官方插件。</text>
+  </view>
+</view>

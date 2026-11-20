@@ -1,0 +1,27 @@
+<!-- pages/library/library.wxml -->
+<view class="container">
+  <view class="search-wrap">
+    <input class="search-input" placeholder="🔍 搜索卡片名称或分类..." bindinput="onSearch" value="{{searchTerm}}" />
+  </view>
+
+  <text class="tip-text">💡 提示：关闭开关可暂时隐藏卡片，配合儿童 PECS 第III阶段渐进式图片辨别训练。</text>
+
+  <view class="lib-list">
+    <block wx:for="{{displayCards}}" wx:key="id">
+      <view class="lib-item">
+        <view class="lib-left">
+          <view class="color-dot" style="background:{{item.borderColor || '#94A3B8'}};"></view>
+          <text class="lib-icon">{{item.icon}}</text>
+          <view>
+            <text class="lib-title">{{item.text}} <text class="lib-pinyin">{{item.pinyin}}</text></text>
+            <text class="lib-cat">{{item.category}} {{item.customAudio ? '· 🎙️原声' : ''}}</text>
+          </view>
+        </view>
+        <view class="lib-right">
+          <switch checked="{{!item.hidden}}" color="#0284C7" bindchange="toggleVisibility" data-id="{{item.id}}" />
+          <text wx:if="{{item.isCustom}}" class="btn-del" bindtap="deleteCard" data-id="{{item.id}}" data-text="{{item.text}}">删除</text>
+        </view>
+      </view>
+    </block>
+  </view>
+</view>

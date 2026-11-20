@@ -14,18 +14,12 @@
     <div class="brand-section">
       <div class="brand-logo">🌟</div>
       <div class="brand-title">
-        <h1>声动星河 · 电子PECS <span class="badge">AAC循证版</span></h1>
+        <h1>声动星河 · 电子PECS <span class="badge">AAC临床循证版</span></h1>
+        <div class="brand-subtitle">Fitzgerald Key 色彩编码 · 离线语音 · 本地隐私优先</div>
       </div>
     </div>
 
     <div class="header-controls">
-      <!-- 智能情境选择器 -->
-      <div class="context-selector-wrap">
-        <label for="contextSelect">情境感知:</label>
-        <select id="contextSelect" class="context-select"></select>
-      </div>
-
-      <!-- 家长与特教管理中心切换（带儿童防误触锁） -->
       <button id="btnParentMode" class="btn-parent-mode">
         <span>⚙️</span>
         <span>家长/特教中心</span>
@@ -33,17 +27,29 @@
     </div>
   </header>
 
+  <!-- 情境快捷切换栏 (Context Quick Pills) -->
+  <div class="context-bar-wrap">
+    <div class="context-bar-inner" id="contextPillsBar">
+      <span class="context-label">📍 当前情境:</span>
+      <!-- 由 JS 动态渲染情境胶囊 -->
+    </div>
+  </div>
+
   <!-- 核心交互操作区 -->
   <main class="main-communication-area">
 
-    <!-- 句子条 (Sentence Strip) - 严格遵循 PECS Phase IV 句式逻辑 -->
+    <!-- 标准化句子条 (Sentence Strip) -->
     <section class="sentence-strip-container">
       <div class="strip-header">
         <div class="strip-title">
           <span>🧩</span>
           <span>标准化句子条 (Sentence Strip)</span>
         </div>
-        <div class="strip-tips">点击或拖拽下方卡片入条 · 组句后点击朗读</div>
+
+        <!-- 多句式起始卡切换 (支持请求/拒绝/情绪/评论) -->
+        <div class="starter-switcher" id="starterSwitcher">
+          <!-- 由 JS 动态渲染 -->
+        </div>
       </div>
 
       <!-- 卡片吸附主板 -->
@@ -51,16 +57,24 @@
 
       <!-- 句子条操作按钮组 -->
       <div class="strip-actions">
-        <button id="btnBackSentence" class="btn-action-ghost" title="撤回最后一张卡片">
-          <span>⌫</span> 撤销
-        </button>
-        <button id="btnClearSentence" class="btn-action-ghost" title="清空全部卡片">
-          <span>🗑️</span> 清空
-        </button>
-        <button id="btnSpeakSentence" class="btn-speak" title="朗读整句语音">
-          <span>🔊</span>
-          <span>朗读整句</span>
-        </button>
+        <div class="strip-actions-left">
+          <button id="btnBackSentence" class="btn-action-ghost" title="撤回最后一张卡片">
+            <span>⌫</span> 撤销
+          </button>
+          <button id="btnClearSentence" class="btn-action-ghost" title="清空全部卡片">
+            <span>🗑️</span> 清空
+          </button>
+        </div>
+
+        <div class="strip-actions-right">
+          <button id="btnExchangeShow" class="btn-exchange" title="放大递给家长/老师看，完成真实社交交换">
+            <span>🤝</span> 递给大人看
+          </button>
+          <button id="btnSpeakSentence" class="btn-speak" title="朗读整句语音">
+            <span>🔊</span>
+            <span>朗读整句</span>
+          </button>
+        </div>
       </div>
     </section>
 
@@ -69,7 +83,7 @@
       <div class="recommend-header">
         <div>
           <span>✨</span>
-          <span>情境高频推荐卡</span>
+          <span>情境高频推荐卡 (秒级直达，免翻找)</span>
         </div>
         <span id="recommendContextLabel" class="recommend-tag">智能感知中...</span>
       </div>
@@ -85,17 +99,44 @@
   </main>
 
   <!-- ========================================================
+       递卡交换全屏展示弹窗 (PECS 真实社交交换闭环)
+       ======================================================== -->
+  <div id="exchangeShowcaseModal" class="modal-overlay">
+    <div class="modal-card exchange-modal-card">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <span class="recommend-tag" style="font-size:13px;">🤝 PECS 社交交换展示模式</span>
+        <button class="btn-close-modal">✕</button>
+      </div>
+
+      <div id="exchangeCardsShowcase" class="exchange-cards-showcase"></div>
+      <div id="exchangeSentenceText" class="exchange-sentence-text">我想要 苹果</div>
+
+      <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+        <button id="btnExchangeSpeak" class="btn-speak" style="font-size:16px; padding:12px 24px;">
+          <span>🔊</span> 再读一遍
+        </button>
+        <button id="btnConfirmIndependent" class="btn-action-ghost" style="background:#DCFCE7; border-color:#22C55E; color:#15803D; padding:12px 20px;">
+          <span>✅</span> 大人已回应 (自主表达)
+        </button>
+        <button id="btnConfirmPrompted" class="btn-action-ghost" style="background:#FEF3C7; border-color:#F59E0B; color:#B45309; padding:12px 18px;">
+          <span>👏</span> 辅助引导完成
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================
        儿童防误触数学锁弹窗 (Child Lock Modal)
        ======================================================== -->
   <div id="childLockModal" class="modal-overlay">
     <div class="modal-card lock-dialog-card">
       <h3>家长/特教权限验证</h3>
-      <p style="font-size: 13px; color: #64748B; margin-top: 4px;">为防止儿童误改配置，请完成简易算术：</p>
+      <p style="font-size: 13px; color: #64748B; margin-top: 6px;">为防止儿童误改配置，请完成简易算术：</p>
       <div id="lockQuestion" class="lock-question">请计算：3 + 5 = ?</div>
-      <input type="number" id="lockAnswerInput" class="form-control" style="text-align: center; font-size: 20px; font-weight: bold; width: 140px; margin: 0 auto 16px;" placeholder="输入数字">
+      <input type="number" id="lockAnswerInput" class="form-control" style="text-align: center; font-size: 20px; font-weight: bold; width: 150px; margin: 0 auto 18px;" placeholder="输入答案">
       <div style="display: flex; gap: 10px; justify-content: center;">
         <button class="btn-action-ghost btn-close-modal">取消</button>
-        <button id="btnConfirmLock" class="btn-speak" style="padding: 8px 24px; font-size: 15px;">确认进入</button>
+        <button id="btnConfirmLock" class="btn-speak" style="padding: 10px 24px; font-size: 15px;">确认进入</button>
       </div>
     </div>
   </div>
@@ -110,7 +151,6 @@
         <button class="btn-close-modal">✕</button>
       </div>
 
-      <!-- 导航标签 -->
       <div class="modal-tabs">
         <button class="modal-tab-btn active" data-tab="studio">📷 拍照做卡工坊</button>
         <button class="modal-tab-btn" data-tab="library">📁 卡片库管理</button>
@@ -122,38 +162,40 @@
 
         <!-- 标签页 1：拍照做卡工坊 -->
         <div id="tabPane_studio" class="tab-pane active">
-          <div class="form-group">
-            <label>拍照或上传物品实物照片：</label>
-            <div id="cardPhotoPreview" class="camera-preview-box">
-              <span style="font-size: 28px;">📷</span>
-              <span class="upload-tip">点击拍摄/选图</span>
-              <img id="previewImg" style="display: none;" alt="预览图">
+          <div style="display:flex; gap:20px; align-items:flex-start; flex-wrap:wrap; margin-bottom:14px;">
+            <div>
+              <label style="display:block; font-size:13px; font-weight:700; color:#334155; margin-bottom:6px;">拍照或上传实物图：</label>
+              <div id="cardPhotoPreview" class="camera-preview-box">
+                <span style="font-size: 30px;">📷</span>
+                <span class="upload-tip">点击拍摄/选图</span>
+                <img id="previewImg" style="display: none;" alt="预览图">
+              </div>
+              <input type="file" id="inputCardPhoto" accept="image/*" capture="environment" style="display: none;">
             </div>
-            <input type="file" id="inputCardPhoto" accept="image/*" style="display: none;">
-            <p style="font-size: 12px; color: #94A3B8;">建议实物居中拍摄，系统将自动进行 1:1 正方形微损压缩</p>
+
+            <div style="flex:1; min-width:220px;">
+              <div class="form-group">
+                <label>词汇名称 (汉字，输入后自动匹配拼音)：</label>
+                <input type="text" id="inputCardText" class="form-control" placeholder="例如：草莓、海苔、酸奶">
+              </div>
+              <div class="form-group">
+                <label>注音拼音 (可手动微调)：</label>
+                <input type="text" id="inputCardPinyin" class="form-control" placeholder="自动识别或手动输入">
+              </div>
+            </div>
           </div>
 
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
             <div class="form-group">
-              <label>词汇名称 (汉字)：</label>
-              <input type="text" id="inputCardText" class="form-control" placeholder="例如：草莓海苔">
-            </div>
-            <div class="form-group">
-              <label>注音拼音 (选填)：</label>
-              <input type="text" id="inputCardPinyin" class="form-control" placeholder="例如：cǎo méi">
-            </div>
-          </div>
-
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
-            <div class="form-group">
-              <label>所属分类：</label>
+              <label>所属分类 (自动应用 Fitzgerald Key 色彩)：</label>
               <select id="selectCardCategory" class="form-control">
-                <option value="food">🍽️ 食物饮料</option>
-                <option value="toy">🧸 玩具游戏</option>
-                <option value="action">🏃 动作动词</option>
-                <option value="daily">🧻 日常自理</option>
-                <option value="emotion">❤️ 情绪感受</option>
-                <option value="people">👨‍👩‍👧 人物称呼</option>
+                <option value="food">🍽️ 食物饮料 (名词橙)</option>
+                <option value="toy">🧸 玩具游戏 (名词橙)</option>
+                <option value="action">🏃 动作动词 (动词绿)</option>
+                <option value="daily">🧻 日常自理 (动词绿)</option>
+                <option value="emotion">❤️ 情绪感受 (感受蓝)</option>
+                <option value="people">👨‍👩‍👧 人物称呼 (人物黄)</option>
+                <option value="social">🤝 社交礼貌 (社交紫)</option>
               </select>
             </div>
             <div class="form-group">
@@ -169,16 +211,32 @@
             </div>
           </div>
 
-          <div style="display: flex; gap: 12px; margin-top: 10px;">
-            <button id="btnPreviewVoice" class="btn-action-ghost" style="flex: 1;">🔊 试听发音</button>
+          <!-- 家长真人录音区 -->
+          <div class="form-group">
+            <label>个性化语音录制 (可选：对TTS机械音敏感的儿童可录制家长温暖原声)：</label>
+            <div class="recorder-box">
+              <span id="recordStatusText" style="font-size:13px; color:#64748B;">未录制自定义语音 (将使用系统TTS)</span>
+              <div style="display:flex; gap:8px;">
+                <button id="btnToggleRecord" type="button" class="btn-action-ghost" style="padding:6px 12px;">🎙️ 开始录音</button>
+                <button id="btnPlayRecorded" type="button" class="btn-action-ghost" style="padding:6px 12px; display:none;">▶️ 试听录音</button>
+                <button id="btnClearRecord" type="button" class="btn-action-ghost" style="padding:6px 10px; display:none; color:#ef4444;">清除</button>
+              </div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 12px; margin-top: 12px;">
+            <button id="btnPreviewVoice" class="btn-action-ghost" style="flex: 1; justify-content:center;">🔊 TTS试听</button>
             <button id="btnSaveNewCard" class="btn-speak" style="flex: 2; justify-content: center; font-size: 15px;">💾 保存并生成卡片</button>
           </div>
         </div>
 
         <!-- 标签页 2：卡片库管理 -->
         <div id="tabPane_library" class="tab-pane">
-          <p style="font-size: 13px; color: #64748B; margin-bottom: 12px;">已收录卡片清单（支持删除您自定义添加的生活卡片）：</p>
-          <div id="cardLibraryList" style="max-height: 380px; overflow-y: auto;"></div>
+          <div style="display:flex; gap:10px; margin-bottom:12px;">
+            <input type="text" id="inputSearchLibrary" class="form-control" placeholder="🔍 搜索卡片名称或分类...">
+          </div>
+          <p style="font-size: 12px; color: #64748B; margin-bottom: 10px;">💡 提示：可通过右侧开关控制卡片是否在儿童屏显示，配合 Phase III 渐进式辨别训练。</p>
+          <div id="cardLibraryList" style="max-height: 350px; overflow-y: auto;"></div>
         </div>
 
         <!-- 标签页 3：行为数据看板 -->
@@ -192,9 +250,13 @@
               <div class="stat-label">今日主动发起</div>
               <div id="statTodayCount" class="stat-value">0</div>
             </div>
+            <div class="stat-metric-card">
+              <div class="stat-label">自主表达比例</div>
+              <div id="statIndependentRate" class="stat-value">100%</div>
+            </div>
             <div class="stat-metric-card" style="grid-column: span 2;">
-              <div class="stat-label">最爱使用卡片 Top 5</div>
-              <div id="statTopCards" style="font-size: 14px; font-weight: bold; color: #0284C7; margin-top: 6px;">暂无数据</div>
+              <div class="stat-label">高频使用卡片 Top 5</div>
+              <div id="statTopCards" style="font-size: 13px; font-weight: bold; color: #0284C7; margin-top: 6px;">暂无数据</div>
             </div>
           </div>
 
@@ -204,7 +266,10 @@
           </div>
 
           <div class="form-group">
-            <label>最近沟通事件流水记录 (自动本地沉淀)：</label>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <label style="margin:0;">最近沟通事件流水记录 (自动本地沉淀)：</label>
+              <button id="btnExportLogsCSV" class="btn-action-ghost" style="padding:4px 10px; font-size:12px;">📊 导出CSV报表</button>
+            </div>
             <div class="logs-table-wrap">
               <table class="logs-table">
                 <thead>
@@ -212,7 +277,7 @@
                     <th>时间</th>
                     <th>表达句子</th>
                     <th>情境</th>
-                    <th>卡片数</th>
+                    <th>方式</th>
                   </tr>
                 </thead>
                 <tbody id="logsTableBody"></tbody>
@@ -223,13 +288,20 @@
 
         <!-- 标签页 4：语音与系统设置 -->
         <div id="tabPane_settings" class="tab-pane">
-          <!-- 循证医学与专业声明 -->
           <div class="disclaimer-card">
             <div class="disclaimer-icon">⚠️</div>
             <div class="disclaimer-text">
               <strong>专业AAC评估与临床使用声明：</strong><br>
               本系统为特需儿童日常辅助沟通与视觉增强工具，不替代正规医疗康复机构对儿童语言与认知发育阶段的专业AAC临床评估。请在特教老师或言语病理学家指导下开展结构化PECS六阶段训练。
             </div>
+          </div>
+
+          <div class="form-group">
+            <label>训练阶段与网格密度调节 (适应个体发育水平)：</label>
+            <select id="settingGridDensity" class="form-control">
+              <option value="standard">标准模式 (Phase IV+ 丰富词库网格)</option>
+              <option value="beginner">入门大卡模式 (Phase I-III 超大触控靶心，防误触)</option>
+            </select>
           </div>
 
           <div class="form-group">
@@ -242,12 +314,13 @@
             <select id="settingVoice" class="form-control"></select>
           </div>
 
-          <div class="form-group" style="padding-top: 10px; border-top: 1px solid #E2E8F0;">
-            <label>数据本地优先与备份迁移：</label>
-            <p style="font-size: 12px; color: #64748B; margin-bottom: 8px;">所有照片与行为日志均存储在本地设备中。更换设备时可导出离线卡包迁移：</p>
-            <div style="display: flex; gap: 12px;">
-              <button id="btnExportPack" class="btn-action-ghost" style="flex: 1;">📥 导出离线卡包 (JSON)</button>
-              <button id="btnImportPack" class="btn-action-ghost" style="flex: 1;">📤 导入离线卡包</button>
+          <div class="form-group" style="padding-top: 12px; border-top: 1px solid #E2E8F0;">
+            <label>数据本地优先与离线卡包备份：</label>
+            <p style="font-size: 12px; color: #64748B; margin-bottom: 10px;">所有照片与行为日志均存储在本地设备中。更换设备或与特教老师共享时可导出离线卡包：</p>
+            <div style="display: flex; gap: 10px; flex-wrap:wrap;">
+              <button id="btnExportPack" class="btn-action-ghost" style="flex: 1; justify-content:center;">📥 导出离线卡包 (JSON)</button>
+              <button id="btnImportPack" class="btn-action-ghost" style="flex: 1; justify-content:center;">📤 导入离线卡包</button>
+              <button id="btnResetDefaults" class="btn-action-ghost" style="color:#ef4444; border-color:#fca5a5;">🔄 恢复默认词库</button>
               <input type="file" id="inputImportFile" accept=".json" style="display: none;">
             </div>
           </div>

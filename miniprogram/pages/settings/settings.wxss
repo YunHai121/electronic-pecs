@@ -1,0 +1,80 @@
+/* pages/settings/settings.wxss */
+.setting-card {
+  background: #FFFFFF;
+  border: 2rpx solid #E2E8F0;
+  border-radius: 22rpx;
+  padding: 28rpx;
+  margin-bottom: 22rpx;
+}
+.setting-title {
+  font-size: 30rpx;
+  font-weight: 800;
+  color: #0F172A;
+  display: block;
+}
+.setting-desc {
+  font-size: 22rpx;
+  color: #64748B;
+  display: block;
+  margin: 8rpx 0 20rpx;
+}
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 18rpx;
+}
+.radio-item {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  font-size: 26rpx;
+  color: #334155;
+  font-weight: 600;
+}
+.slider-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 22rpx;
+  color: #94A3B8;
+  margin-top: 6rpx;
+}
+.btn-row {
+  display: flex;
+  gap: 16rpx;
+}
+.btn-outline {
+  flex: 1;
+  font-size: 24rpx;
+  font-weight: 700;
+  background: #F1F5F9;
+  color: #0284C7;
+  border-radius: 14rpx;
+}
+.btn-danger {
+  flex: 1;
+  font-size: 24rpx;
+  font-weight: 700;
+  background: #FEF2F2;
+  color: #EF4444;
+  border-radius: 14rpx;
+}
+.btn-outline::after, .btn-danger::after { border: none; }
+
+.disclaimer-box {
+  background: #FFFBEB;
+  border: 2rpx solid #FDE68A;
+  border-radius: 18rpx;
+  padding: 24rpx;
+}
+.disc-title {
+  font-size: 26rpx;
+  font-weight: 800;
+  color: #92400E;
+  display: block;
+  margin-bottom: 8rpx;
+}
+.disc-text {
+  font-size: 22rpx;
+  color: #B45309;
+  line-height: 1.5;
+}

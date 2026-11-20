@@ -1,18 +1,26 @@
 /* app.wxss */
 page {
-  background-color: #F8FAFC;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  color: #1E293B;
+  background-color: #F4F7FB;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+  color: #0F172A;
   box-sizing: border-box;
 }
 
 .container {
-  padding: 24rpx;
+  padding: 20rpx 24rpx 40rpx;
+  box-sizing: border-box;
 }
 
 .btn-primary {
-  background: #0284C7;
-  color: #ffffff;
+  background: linear-gradient(135deg, #0EA5E9, #0284C7);
+  color: #FFFFFF;
   border-radius: 20rpx;
   font-weight: bold;
+  font-size: 30rpx;
+  border: none;
+  box-shadow: 0 6rpx 16rpx rgba(2, 132, 199, 0.25);
+}
+
+.btn-primary::after {
+  border: none;
 }

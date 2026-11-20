@@ -1,18 +1,49 @@
 <!-- pages/stats/stats.wxml -->
 <view class="container">
-  <view class="stat-card">
-    <text class="stat-number">{{logs.length}}</text>
-    <text class="stat-label">累计沟通次数</text>
+  <view class="stats-grid">
+    <view class="stat-card">
+      <text class="stat-number">{{totalCount}}</text>
+      <text class="stat-label">累计沟通次数</text>
+    </view>
+    <view class="stat-card">
+      <text class="stat-number">{{todayCount}}</text>
+      <text class="stat-label">今日沟通</text>
+    </view>
+    <view class="stat-card">
+      <text class="stat-number">{{indepRate}}%</text>
+      <text class="stat-label">自主表达率</text>
+    </view>
   </view>
 
-  <view class="section-title">最近沟通记录流水：</view>
-  <view class="logs-list">
-    <block wx:for="{{logs}}" wx:key="index">
-      <view class="log-item">
-        <text class="log-time">{{item.time}}</text>
-        <text class="log-text">{{item.sentence}}</text>
+  <view class="panel-box">
+    <text class="panel-title">🏆 高频喜爱卡片 Top 5</text>
+    <view wx:if="{{topCards.length === 0}}" class="empty-tip">暂无足够数据</view>
+    <block wx:for="{{topCards}}" wx:key="name">
+      <view class="bar-row">
+        <text class="bar-name">{{item.name}}</text>
+        <view class="bar-track">
+          <view class="bar-fill" style="width:{{item.percent}}%;"></view>
+        </view>
+        <text class="bar-count">{{item.count}}次</text>
       </view>
     </block>
-    <view wx:if="{{logs.length === 0}}" class="empty-tip">暂无沟通记录</view>
+  </view>
+
+  <button class="btn-primary copy-report-btn" bindtap="copyReport">📋 复制IEP沟通报告发送给老师</button>
+
+  <view class="section-title">最近沟通事件流水：</view>
+  <view class="logs-list">
+    <block wx:for="{{logs}}" wx:key="id">
+      <view class="log-item">
+        <view>
+          <text class="log-text">{{item.sentenceText}}</text>
+          <text class="log-time">{{item.dateStr}} {{item.timeStr}} · {{item.context}}</text>
+        </view>
+        <text class="log-badge {{item.independent !== false ? 'indep' : 'prompt'}}">
+          {{item.independent !== false ? '自主' : '引导'}}
+        </text>
+      </view>
+    </block>
+    <view wx:if="{{logs.length === 0}}" class="empty-tip">暂无沟通记录，完成朗读或交换后自动沉淀</view>
   </view>
 </view>

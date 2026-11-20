@@ -1,61 +1,151 @@
 <!-- pages/index/index.wxml -->
 <view class="container">
-  <!-- 顶部工具栏 -->
+
+  <!-- 顶部栏：当前情境指示 + 家长中心入口 -->
   <view class="header-bar">
-    <view class="context-tag">情境：{{currentContextName}}</view>
-    <button class="btn-parent" bindtap="goToParent">⚙️ 家长/特教端</button>
+    <view class="brand-badge">
+      <text>🌟 电子PECS</text>
+    </view>
+    <button class="btn-parent" bindtap="openChildLock">⚙️ 家长/特教中心</button>
   </view>
 
-  <!-- PECS 句子条 (Sentence Strip) -->
-  <view class="sentence-strip-wrap">
-    <view class="strip-header">
-      <text class="strip-title">🧩 标准句子条</text>
-      <text class="strip-count">{{sentence.length}} / 5 张</text>
-    </view>
-    <scroll-view scroll-x class="sentence-board">
-      <block wx:for="{{sentence}}" wx:key="index">
-        <view class="card-item in-strip" bindtap="removeCard" data-index="{{index}}">
-          <text class="card-pinyin">{{item.pinyin}}</text>
-          <text class="card-icon">{{item.icon}}</text>
-          <text class="card-text">{{item.text}}</text>
+  <!-- 情境快捷胶囊切换栏 -->
+  <scroll-view scroll-x class="context-scroll" enable-flex>
+    <view class="context-pills">
+      <block wx:for="{{contexts}}" wx:key="id">
+        <view class="context-pill {{currentContext === item.id ? 'active' : ''}}" bindtap="changeContext" data-id="{{item.id}}">
+          <text>{{item.icon}} {{item.name}}</text>
         </view>
       </block>
+    </view>
+  </scroll-view>
+
+  <!-- PECS 标准化句子条 (Sentence Strip) -->
+  <view class="sentence-strip-wrap">
+    <view class="strip-top-row">
+      <text class="strip-title">🧩 句子条 ({{sentence.length}}/6)</text>
+      <!-- 多句式起始卡切换 -->
+      <view class="starter-row">
+        <block wx:for="{{starters}}" wx:key="id">
+          <view class="starter-chip {{activeStarterId === item.id ? 'active' : ''}}" bindtap="switchStarter" data-starter="{{item}}">
+            <text>{{item.text}}</text>
+          </view>
+        </block>
+      </view>
+    </view>
+
+    <!-- 魔术贴吸附主板 -->
+    <scroll-view scroll-x class="sentence-board" scroll-into-view="{{scrollTargetId}}">
+      <view class="sentence-board-inner">
+        <block wx:for="{{sentence}}" wx:key="instanceId">
+          <view id="strip_{{index}}" class="card-item in-strip {{playingIndex === index ? 'highlight-playing' : ''}}" style="background:{{item.color || '#FFFFFF'}}; border-color:{{item.borderColor || '#3B82F6'}};" bindtap="removeCard" data-index="{{index}}">
+            <text class="card-pinyin">{{item.pinyin}}</text>
+            <image wx:if="{{item.customImg}}" src="{{item.customImg}}" mode="aspectFill" class="card-photo"></image>
+            <text wx:else class="card-icon">{{item.icon}}</text>
+            <text class="card-text">{{item.text}}</text>
+            <view wx:if="{{index > 0}}" class="badge-remove">✕</view>
+          </view>
+        </block>
+        <text wx:if="{{sentence.length <= 1}}" class="strip-hint">👉 点选下方卡片组句</text>
+      </view>
     </scroll-view>
+
+    <!-- 句子条控制操作 -->
     <view class="strip-actions">
-      <button class="btn-ghost" bindtap="clearSentence">清空</button>
-      <button class="btn-speak {{isSpeaking ? 'speaking' : ''}}" bindtap="playSentence">🔊 朗读整句</button>
+      <view class="strip-actions-left">
+        <button class="btn-ghost" bindtap="undoLastCard">⌫ 撤销</button>
+        <button class="btn-ghost" bindtap="clearSentence">🗑️ 清空</button>
+      </view>
+      <view class="strip-actions-right">
+        <button class="btn-exchange" bindtap="openExchangeModal">🤝 递给大人</button>
+        <button class="btn-speak {{isSpeaking ? 'speaking' : ''}}" bindtap="playSentence">🔊 朗读</button>
+      </view>
     </view>
   </view>
 
-  <!-- 推荐区 -->
-  <view class="section-title">✨ 情境高频推荐</view>
-  <scroll-view scroll-x class="recommend-scroll">
-    <block wx:for="{{recommendList}}" wx:key="id">
-      <view class="card-item small" bindtap="addCard" data-card="{{item}}">
-        <text class="card-icon">{{item.icon}}</text>
-        <text class="card-text">{{item.text}}</text>
+  <!-- 智能情境高频推荐区 -->
+  <view class="recommend-card-box">
+    <view class="section-header">
+      <text class="section-title">✨ 情境高频推荐</text>
+      <text class="context-badge">{{currentContextLabel}}</text>
+    </view>
+    <scroll-view scroll-x class="recommend-scroll">
+      <view class="recommend-inner">
+        <block wx:for="{{recommendList}}" wx:key="id">
+          <view class="card-item small" style="background:{{item.color || '#FFFFFF'}}; border-color:{{item.borderColor || '#E2E8F0'}};" bindtap="addCard" data-card="{{item}}">
+            <text class="card-pinyin">{{item.pinyin}}</text>
+            <image wx:if="{{item.customImg}}" src="{{item.customImg}}" mode="aspectFill" class="card-photo-sm"></image>
+            <text wx:else class="card-icon-sm">{{item.icon}}</text>
+            <text class="card-text-sm">{{item.text}}</text>
+          </view>
+        </block>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 分类导航栏 -->
+  <scroll-view scroll-x class="cat-bar">
+    <block wx:for="{{categories}}" wx:key="id">
+      <view class="cat-btn {{activeCat === item.id ? 'active' : ''}}" bindtap="changeCat" data-cat="{{item.id}}">
+        <text>{{item.icon}} {{item.name}}</text>
       </view>
     </block>
   </scroll-view>
 
-  <!-- 分类栏 -->
-  <scroll-view scroll-x class="cat-bar">
-    <view class="cat-btn {{activeCat === 'all' ? 'active' : ''}}" bindtap="changeCat" data-cat="all">全部</view>
-    <view class="cat-btn {{activeCat === 'food' ? 'active' : ''}}" bindtap="changeCat" data-cat="food">食物</view>
-    <view class="cat-btn {{activeCat === 'toy' ? 'active' : ''}}" bindtap="changeCat" data-cat="toy">玩具</view>
-    <view class="cat-btn {{activeCat === 'action' ? 'active' : ''}}" bindtap="changeCat" data-cat="action">动作</view>
-    <view class="cat-btn {{activeCat === 'daily' ? 'active' : ''}}" bindtap="changeCat" data-cat="daily">自理</view>
-    <view class="cat-btn {{activeCat === 'emotion' ? 'active' : ''}}" bindtap="changeCat" data-cat="emotion">情绪</view>
-  </scroll-view>
-
-  <!-- 主卡片网格 -->
-  <view class="cards-grid">
+  <!-- 核心卡片网格 (支持入门2列大卡与标准3列网格) -->
+  <view class="cards-grid {{gridDensity === 'beginner' ? 'grid-beginner' : ''}}">
     <block wx:for="{{filteredCards}}" wx:key="id">
-      <view class="card-item" bindtap="addCard" data-card="{{item}}">
+      <view class="card-item grid-card" style="background:{{item.color || '#FFFFFF'}}; border-color:{{item.borderColor || '#E2E8F0'}};" bindtap="addCard" data-card="{{item}}">
+        <text wx:if="{{item.customAudio}}" class="audio-tag">🎙️</text>
         <text class="card-pinyin">{{item.pinyin}}</text>
-        <text class="card-icon">{{item.icon}}</text>
+        <image wx:if="{{item.customImg}}" src="{{item.customImg}}" mode="aspectFill" class="card-photo"></image>
+        <text wx:else class="card-icon">{{item.icon}}</text>
         <text class="card-text">{{item.text}}</text>
       </view>
     </block>
   </view>
+
+  <!-- ========================================================
+       递卡社交交换全屏展示弹窗
+       ======================================================== -->
+  <view wx:if="{{showExchangeModal}}" class="modal-mask">
+    <view class="modal-panel exchange-panel">
+      <view class="modal-top">
+        <text class="exchange-tag">🤝 PECS 社交交换展示</text>
+        <text class="modal-close" bindtap="closeExchangeModal">✕</text>
+      </view>
+      <view class="exchange-cards-wrap">
+        <block wx:for="{{sentence}}" wx:key="instanceId">
+          <view class="card-item exchange-card" style="background:{{item.color || '#FFFFFF'}}; border-color:{{item.borderColor || '#3B82F6'}};">
+            <text class="card-pinyin">{{item.pinyin}}</text>
+            <image wx:if="{{item.customImg}}" src="{{item.customImg}}" mode="aspectFill" class="card-photo"></image>
+            <text wx:else class="card-icon">{{item.icon}}</text>
+            <text class="card-text">{{item.text}}</text>
+          </view>
+        </block>
+      </view>
+      <view class="exchange-sentence-text">{{exchangeText}}</view>
+      <view class="exchange-btns">
+        <button class="btn-confirm-indep" bindtap="confirmExchange" data-indep="true">✅ 大人已回应 (自主表达)</button>
+        <button class="btn-confirm-prompt" bindtap="confirmExchange" data-indep="false">👏 辅助引导完成</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- ========================================================
+       儿童防误触算术锁弹窗
+       ======================================================== -->
+  <view wx:if="{{showLockModal}}" class="modal-mask">
+    <view class="modal-panel lock-panel">
+      <text class="lock-title">家长/特教权限验证</text>
+      <text class="lock-desc">为防止儿童误改设置，请完成算术验证：</text>
+      <text class="lock-question">请计算：{{lockN1}} + {{lockN2}} = ?</text>
+      <input type="number" class="lock-input" placeholder="输入答案" value="{{lockInput}}" bindinput="onLockInput" focus="{{showLockModal}}" />
+      <view class="lock-actions">
+        <button class="btn-ghost" bindtap="closeLockModal">取消</button>
+        <button class="btn-primary lock-confirm-btn" bindtap="verifyLock">确认进入</button>
+      </view>
+    </view>
+  </view>
+
 </view>
