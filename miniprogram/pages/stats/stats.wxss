@@ -1,0 +1,54 @@
+/* pages/stats/stats.wxss */
+.stat-card {
+  background: #FFFFFF;
+  border-radius: 20rpx;
+  padding: 40rpx;
+  text-align: center;
+  border: 1px solid #E2E8F0;
+  margin-bottom: 30rpx;
+}
+.stat-number {
+  font-size: 60rpx;
+  font-weight: bold;
+  color: #0284C7;
+  display: block;
+}
+.stat-label {
+  font-size: 26rpx;
+  color: #64748B;
+  margin-top: 8rpx;
+  display: block;
+}
+.section-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #334155;
+  margin-bottom: 16rpx;
+}
+.logs-list {
+  background: #FFFFFF;
+  border-radius: 20rpx;
+  border: 1px solid #E2E8F0;
+  overflow: hidden;
+}
+.log-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 24rpx;
+  border-bottom: 1px solid #F1F5F9;
+}
+.log-time {
+  font-size: 24rpx;
+  color: #94A3B8;
+}
+.log-text {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #0F172A;
+}
+.empty-tip {
+  padding: 40rpx;
+  text-align: center;
+  font-size: 26rpx;
+  color: #94A3B8;
+}

@@ -1,0 +1,22 @@
+<!-- pages/create/create.wxml -->
+<view class="container">
+  <view class="photo-box" bindtap="chooseImage">
+    <image wx:if="{{photoUrl}}" src="{{photoUrl}}" mode="aspectFill" class="photo-img"></image>
+    <view wx:else class="upload-placeholder">
+      <text style="font-size: 60rpx;">📷</text>
+      <text style="font-size: 26rpx; color: #64748B; margin-top: 10rpx;">点击拍摄或选取照片</text>
+    </view>
+  </view>
+
+  <view class="form-item">
+    <text class="label">卡片名称 (汉字)：</text>
+    <input class="input" placeholder="例如：海苔" bindinput="onInputText" value="{{cardText}}"/>
+  </view>
+
+  <view class="form-item">
+    <text class="label">注音拼音：</text>
+    <input class="input" placeholder="例如：hǎi tái" bindinput="onInputPinyin" value="{{cardPinyin}}"/>
+  </view>
+
+  <button class="btn-primary" style="margin-top: 40rpx; width: 100%;" bindtap="saveCard">保存卡片</button>
+</view>

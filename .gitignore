@@ -1,0 +1,14 @@
+# OS & Editor
+.DS_Store
+Thumbs.db
+Desktop.ini
+.vscode/
+.idea/
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Mini Program build outputs
+miniprogram_npm/
+node_modules/

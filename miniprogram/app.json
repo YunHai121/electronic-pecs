@@ -1,0 +1,15 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/parent/parent",
+    "pages/create/create",
+    "pages/stats/stats"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#0284C7",
+    "navigationBarTitleText": "声动星河 · 电子PECS",
+    "navigationBarTextStyle": "white"
+  },
+  "sitemapLocation": "sitemap.json"
+}

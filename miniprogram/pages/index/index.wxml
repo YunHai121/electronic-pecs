@@ -1,0 +1,61 @@
+<!-- pages/index/index.wxml -->
+<view class="container">
+  <!-- 顶部工具栏 -->
+  <view class="header-bar">
+    <view class="context-tag">情境：{{currentContextName}}</view>
+    <button class="btn-parent" bindtap="goToParent">⚙️ 家长/特教端</button>
+  </view>
+
+  <!-- PECS 句子条 (Sentence Strip) -->
+  <view class="sentence-strip-wrap">
+    <view class="strip-header">
+      <text class="strip-title">🧩 标准句子条</text>
+      <text class="strip-count">{{sentence.length}} / 5 张</text>
+    </view>
+    <scroll-view scroll-x class="sentence-board">
+      <block wx:for="{{sentence}}" wx:key="index">
+        <view class="card-item in-strip" bindtap="removeCard" data-index="{{index}}">
+          <text class="card-pinyin">{{item.pinyin}}</text>
+          <text class="card-icon">{{item.icon}}</text>
+          <text class="card-text">{{item.text}}</text>
+        </view>
+      </block>
+    </scroll-view>
+    <view class="strip-actions">
+      <button class="btn-ghost" bindtap="clearSentence">清空</button>
+      <button class="btn-speak {{isSpeaking ? 'speaking' : ''}}" bindtap="playSentence">🔊 朗读整句</button>
+    </view>
+  </view>
+
+  <!-- 推荐区 -->
+  <view class="section-title">✨ 情境高频推荐</view>
+  <scroll-view scroll-x class="recommend-scroll">
+    <block wx:for="{{recommendList}}" wx:key="id">
+      <view class="card-item small" bindtap="addCard" data-card="{{item}}">
+        <text class="card-icon">{{item.icon}}</text>
+        <text class="card-text">{{item.text}}</text>
+      </view>
+    </block>
+  </scroll-view>
+
+  <!-- 分类栏 -->
+  <scroll-view scroll-x class="cat-bar">
+    <view class="cat-btn {{activeCat === 'all' ? 'active' : ''}}" bindtap="changeCat" data-cat="all">全部</view>
+    <view class="cat-btn {{activeCat === 'food' ? 'active' : ''}}" bindtap="changeCat" data-cat="food">食物</view>
+    <view class="cat-btn {{activeCat === 'toy' ? 'active' : ''}}" bindtap="changeCat" data-cat="toy">玩具</view>
+    <view class="cat-btn {{activeCat === 'action' ? 'active' : ''}}" bindtap="changeCat" data-cat="action">动作</view>
+    <view class="cat-btn {{activeCat === 'daily' ? 'active' : ''}}" bindtap="changeCat" data-cat="daily">自理</view>
+    <view class="cat-btn {{activeCat === 'emotion' ? 'active' : ''}}" bindtap="changeCat" data-cat="emotion">情绪</view>
+  </scroll-view>
+
+  <!-- 主卡片网格 -->
+  <view class="cards-grid">
+    <block wx:for="{{filteredCards}}" wx:key="id">
+      <view class="card-item" bindtap="addCard" data-card="{{item}}">
+        <text class="card-pinyin">{{item.pinyin}}</text>
+        <text class="card-icon">{{item.icon}}</text>
+        <text class="card-text">{{item.text}}</text>
+      </view>
+    </block>
+  </view>
+</view>

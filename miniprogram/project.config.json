@@ -1,0 +1,13 @@
+{
+  "miniprogramRoot": "./",
+  "projectname": "electronic-pecs-miniprogram",
+  "description": "面向孤独症低龄儿童的智能电子PECS辅助沟通小程序",
+  "appid": "touristappid",
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "postcss": true,
+    "minified": true
+  },
+  "compileType": "miniprogram"
+}

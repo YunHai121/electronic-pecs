@@ -1,0 +1,20 @@
+<!-- pages/parent/parent.wxml -->
+<view class="container">
+  <view class="menu-grid">
+    <navigator url="/pages/create/create" class="menu-card">
+      <text class="menu-icon">📷</text>
+      <text class="menu-title">拍照做卡工坊</text>
+      <text class="menu-desc">手机随手拍物品快速制卡</text>
+    </navigator>
+    <navigator url="/pages/stats/stats" class="menu-card">
+      <text class="menu-icon">📊</text>
+      <text class="menu-title">行为数据看板</text>
+      <text class="menu-desc">查看儿童沟通频次与词汇分析</text>
+    </navigator>
+  </view>
+
+  <view class="notice-card">
+    <text class="notice-title">⚠️ 专业AAC使用告知</text>
+    <text class="notice-text">本小程序作为辅助沟通与视觉支持工具，不替代正规医疗康复机构对儿童语言与认知发育阶段的专业AAC临床评估。</text>
+  </view>
+</view>

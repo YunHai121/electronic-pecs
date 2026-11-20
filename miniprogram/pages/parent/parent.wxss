@@ -1,0 +1,48 @@
+/* pages/parent/parent.wxss */
+.menu-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+  margin-bottom: 30rpx;
+}
+.menu-card {
+  background: #FFFFFF;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  border: 1px solid #E2E8F0;
+}
+.menu-icon {
+  font-size: 50rpx;
+  display: block;
+  margin-bottom: 10rpx;
+}
+.menu-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #0F172A;
+  display: block;
+}
+.menu-desc {
+  font-size: 24rpx;
+  color: #64748B;
+  margin-top: 6rpx;
+  display: block;
+}
+.notice-card {
+  background: #FFFBEB;
+  border: 1px solid #FDE68A;
+  border-radius: 16rpx;
+  padding: 24rpx;
+}
+.notice-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #92400E;
+  display: block;
+  margin-bottom: 8rpx;
+}
+.notice-text {
+  font-size: 24rpx;
+  color: #B45309;
+  line-height: 1.5;
+}

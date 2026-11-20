@@ -1,0 +1,39 @@
+/* pages/create/create.wxss */
+.photo-box {
+  width: 240rpx;
+  height: 240rpx;
+  border: 2rpx dashed #94A3B8;
+  border-radius: 24rpx;
+  margin: 20rpx auto 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #FFFFFF;
+}
+.photo-img {
+  width: 100%;
+  height: 100%;
+}
+.upload-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.form-item {
+  margin-bottom: 24rpx;
+}
+.label {
+  font-size: 26rpx;
+  font-weight: bold;
+  color: #334155;
+  display: block;
+  margin-bottom: 8rpx;
+}
+.input {
+  background: #FFFFFF;
+  border: 1px solid #CBD5E1;
+  border-radius: 14rpx;
+  padding: 16rpx 20rpx;
+  font-size: 28rpx;
+}

@@ -1,0 +1,731 @@
+/* ========================================================
+   声动星河 · 电子PECS沟通系统 全局样式表
+   专为3-8岁无口语/低口语ASD儿童设计的无障碍与低感官过载界面
+   ======================================================== */
+
+:root {
+  --bg-primary: #F8FAFC;
+  --bg-card: #FFFFFF;
+  --text-main: #1E293B;
+  --text-muted: #64748B;
+  --accent-blue: #0284C7;
+  --accent-light: #E0F2FE;
+  --accent-hover: #0369A1;
+  --accent-gold: #F59E0B;
+  --accent-green: #10B981;
+  --accent-red: #EF4444;
+  --border-color: #E2E8F0;
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-hover: 0 8px 20px rgba(2, 132, 199, 0.15);
+  --radius-card: 18px;
+  --radius-btn: 14px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+/* 顶部通用导航 */
+.top-header {
+  background: #FFFFFF;
+  border-bottom: 2px solid var(--border-color);
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: var(--shadow-sm);
+}
+
+.brand-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-logo {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #38BDF8, #0284C7);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 22px;
+  box-shadow: 0 4px 10px rgba(2, 132, 199, 0.3);
+}
+
+.brand-title h1 {
+  font-size: 19px;
+  font-weight: 700;
+  color: #0F172A;
+  letter-spacing: 0.5px;
+}
+
+.brand-title .badge {
+  font-size: 11px;
+  background: var(--accent-light);
+  color: var(--accent-blue);
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* 情境选择器 */
+.context-selector-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #F1F5F9;
+  padding: 6px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+}
+
+.context-selector-wrap label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.context-select {
+  border: none;
+  background: transparent;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent-blue);
+  cursor: pointer;
+  outline: none;
+}
+
+/* 家长管理入口按钮 */
+.btn-parent-mode {
+  background: #F8FAFC;
+  border: 2px solid #CBD5E1;
+  color: #334155;
+  padding: 8px 16px;
+  border-radius: var(--radius-btn);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.btn-parent-mode:hover {
+  background: #F1F5F9;
+  border-color: #94A3B8;
+}
+
+/* 核心沟通工作区 */
+.main-communication-area {
+  flex: 1;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ========================================================
+   句子条 (Sentence Strip) - 遵循 PECS Phase IV
+   ======================================================== */
+.sentence-strip-container {
+  background: #FFFFFF;
+  border: 3px solid #BAE6FD;
+  border-radius: 20px;
+  padding: 14px 20px;
+  box-shadow: 0 6px 16px rgba(2, 132, 199, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+}
+
+.strip-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.strip-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #0369A1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.strip-tips {
+  font-size: 12px;
+  color: #94A3B8;
+}
+
+.sentence-strip-board {
+  min-height: 130px;
+  background: #F0F9FF;
+  border: 2px dashed #7DD3FC;
+  border-radius: 16px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  transition: all 0.2s ease;
+}
+
+.sentence-strip-board.drag-over {
+  background: #E0F2FE;
+  border-color: #0284C7;
+  box-shadow: inset 0 0 10px rgba(2, 132, 199, 0.2);
+}
+
+/* 句子条动作控制区 */
+.strip-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.btn-speak {
+  background: linear-gradient(135deg, #0EA5E9, #0284C7);
+  color: #FFFFFF;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 14px;
+  font-size: 18px;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.btn-speak:active {
+  transform: scale(0.96);
+  box-shadow: 0 2px 6px rgba(2, 132, 199, 0.2);
+}
+
+.btn-speak.speaking {
+  background: linear-gradient(135deg, #10B981, #059669);
+  animation: pulse-speak 1s infinite alternate;
+}
+
+@keyframes pulse-speak {
+  from { transform: scale(1); box-shadow: 0 0 10px rgba(16, 185, 129, 0.5); }
+  to { transform: scale(1.04); box-shadow: 0 0 20px rgba(16, 185, 129, 0.8); }
+}
+
+.btn-action-ghost {
+  background: #F1F5F9;
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-action-ghost:hover {
+  background: #E2E8F0;
+  color: #0F172A;
+}
+
+/* ========================================================
+   智能情境高频推荐区
+   ======================================================== */
+.recommend-section {
+  background: #FFFFFF;
+  border-radius: 16px;
+  padding: 12px 18px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.recommend-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.recommend-tag {
+  color: var(--accent-blue);
+  background: var(--accent-light);
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+}
+
+.recommend-list {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+}
+
+/* ========================================================
+   分类导航栏 (Category Tabs)
+   ======================================================== */
+.category-nav {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 4px 0;
+  scroll-behavior: smooth;
+}
+
+.cat-tab-btn {
+  background: #FFFFFF;
+  border: 1.5px solid var(--border-color);
+  color: var(--text-muted);
+  padding: 10px 18px;
+  border-radius: 14px;
+  font-size: 15px;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.cat-tab-btn.active {
+  background: var(--accent-blue);
+  color: #FFFFFF;
+  border-color: var(--accent-blue);
+  box-shadow: 0 4px 10px rgba(2, 132, 199, 0.25);
+}
+
+/* ========================================================
+   核心卡片网格 (Card Grid)
+   ======================================================== */
+.cards-grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(115px, 1fr));
+  gap: 14px;
+  padding: 4px;
+}
+
+/* 单张沟通卡片 (Card Item) */
+.pecs-card {
+  background: var(--bg-card);
+  border: 3px solid #E2E8F0;
+  border-radius: var(--radius-card);
+  padding: 10px 8px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  aspect-ratio: 1 / 1.15;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.18s cubic-bezier(0.2, 0.8, 0.2, 1);
+  position: relative;
+  touch-action: manipulation;
+}
+
+.pecs-card:hover {
+  transform: translateY(-4px);
+  border-color: #38BDF8;
+  box-shadow: var(--shadow-hover);
+}
+
+.pecs-card:active {
+  transform: scale(0.95);
+}
+
+/* 句子条内部卡片高亮播放效果 */
+.pecs-card.highlight-playing {
+  border-color: #10B981 !important;
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.6) !important;
+  transform: scale(1.08) !important;
+}
+
+.card-pinyin {
+  font-size: 11px;
+  font-weight: 600;
+  color: #64748B;
+  letter-spacing: 0.5px;
+}
+
+.card-img-wrap {
+  width: 58px;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 4px 0;
+}
+
+.card-img-wrap svg,
+.card-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.card-text {
+  font-size: 16px;
+  font-weight: 800;
+  color: #0F172A;
+  letter-spacing: 1px;
+}
+
+/* 句子条内卡片的轻量移除标记 */
+.pecs-card .btn-remove-card {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 22px;
+  height: 22px;
+  background: #EF4444;
+  color: white;
+  border-radius: 50%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.sentence-strip-board .pecs-card .btn-remove-card {
+  display: flex;
+}
+
+/* ========================================================
+   弹窗与管理中心 (Modal & Parent Panel)
+   ======================================================== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-card {
+  background: #FFFFFF;
+  border-radius: 24px;
+  width: 90%;
+  max-width: 780px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  transform: translateY(20px);
+  transition: transform 0.2s ease;
+}
+
+.modal-overlay.active .modal-card {
+  transform: translateY(0);
+}
+
+.modal-header {
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #F8FAFC;
+}
+
+.modal-header h2 {
+  font-size: 18px;
+  font-weight: 800;
+  color: #0F172A;
+}
+
+.btn-close-modal {
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  color: #64748B;
+  cursor: pointer;
+  line-height: 1;
+}
+
+/* 管理中心内部标签栏 */
+.modal-tabs {
+  display: flex;
+  background: #F1F5F9;
+  border-bottom: 1px solid var(--border-color);
+  overflow-x: auto;
+}
+
+.modal-tab-btn {
+  flex: 1;
+  min-width: 120px;
+  padding: 14px 10px;
+  border: none;
+  background: transparent;
+  font-size: 14px;
+  font-weight: 700;
+  color: #64748B;
+  cursor: pointer;
+  text-align: center;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s;
+}
+
+.modal-tab-btn.active {
+  color: var(--accent-blue);
+  background: #FFFFFF;
+  border-bottom-color: var(--accent-blue);
+}
+
+.modal-body {
+  padding: 24px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.tab-pane {
+  display: none;
+}
+
+.tab-pane.active {
+  display: block;
+}
+
+/* 表单组通用样式 */
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: #334155;
+  margin-bottom: 6px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid var(--border-color);
+  border-radius: 10px;
+  font-size: 15px;
+  color: #0F172A;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.form-control:focus {
+  border-color: var(--accent-blue);
+}
+
+/* 拍照预览框 */
+.camera-preview-box {
+  width: 140px;
+  height: 140px;
+  border: 2px dashed #94A3B8;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  background: #F8FAFC;
+  margin-bottom: 14px;
+}
+
+.camera-preview-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.camera-preview-box .upload-tip {
+  font-size: 12px;
+  color: #64748B;
+  font-weight: 600;
+}
+
+/* 数据统计图表区 */
+.stats-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.stat-metric-card {
+  background: #F8FAFC;
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 14px;
+}
+
+.stat-metric-card .stat-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.stat-metric-card .stat-value {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--accent-blue);
+  margin-top: 4px;
+}
+
+/* 行为日志流水表格 */
+.logs-table-wrap {
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.logs-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  text-align: left;
+}
+
+.logs-table th {
+  background: #F1F5F9;
+  padding: 10px 14px;
+  font-weight: 700;
+  color: #475569;
+}
+
+.logs-table td {
+  padding: 10px 14px;
+  border-top: 1px solid var(--border-color);
+}
+
+/* 警示与医学免责卡片 */
+.disclaimer-card {
+  background: #FFFBEB;
+  border: 1px solid #FDE68A;
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 18px;
+  display: flex;
+  gap: 10px;
+}
+
+.disclaimer-card .disclaimer-icon {
+  font-size: 20px;
+}
+
+.disclaimer-card .disclaimer-text {
+  font-size: 13px;
+  color: #92400E;
+  line-height: 1.5;
+}
+
+/* 儿童防误触锁输入弹窗 */
+.lock-dialog-card {
+  max-width: 360px;
+  text-align: center;
+  padding: 24px;
+}
+
+.lock-question {
+  font-size: 20px;
+  font-weight: 800;
+  color: #0F172A;
+  margin: 16px 0;
+}
+
+/* 移动端媒体查询适配 */
+@media (max-width: 768px) {
+  .top-header {
+    padding: 8px 12px;
+  }
+  .brand-title h1 {
+    font-size: 16px;
+  }
+  .context-selector-wrap label {
+    display: none;
+  }
+  .main-communication-area {
+    padding: 10px;
+  }
+  .sentence-strip-board {
+    min-height: 110px;
+  }
+  .cards-grid-container {
+    grid-template-columns: repeat(auto-fill, minmax(92px, 1fr));
+    gap: 10px;
+  }
+  .pecs-card {
+    border-radius: 14px;
+    padding: 8px 4px 6px;
+  }
+  .card-img-wrap {
+    width: 44px;
+    height: 44px;
+  }
+  .card-text {
+    font-size: 14px;
+  }
+}
